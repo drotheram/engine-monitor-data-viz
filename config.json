@@ -1,0 +1,32 @@
+{
+  "aircraft": {
+    "CGJYY": {
+      "registration": "C-GJYY",
+      "label": "C-GJYY",
+      "icao24": "TODO_LOOKUP",
+      "engine_monitor": "CGR-30P",
+      "adsb_enabled": true,
+      "notes": "Look up ICAO24 at: https://www.airframes.io or https://www.planespotters.net"
+    },
+    "CFHTI": {
+      "registration": "C-FHTI",
+      "label": "C-FHTI",
+      "icao24": "TODO_LOOKUP",
+      "engine_monitor": "CGR-30P",
+      "adsb_enabled": true,
+      "notes": "Look up ICAO24 at: https://www.airframes.io or https://www.planespotters.net"
+    }
+  },
+  "processing": {
+    "min_rpm_threshold": 2000,
+    "min_duration_minutes": 20,
+    "tail_rpm_cutoff": 200,
+    "tail_idle_seconds": 300,
+    "downsample_seconds": 5,
+    "continuation_gap_seconds": 30
+  },
+  "adsb": {
+    "provider": "opensky",
+    "base_url": "https://opensky-network.org/api"
+  }
+}

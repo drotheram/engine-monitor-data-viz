@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engine Monitor Dashboard</title>
+
+  <!-- Plotly (full build with WebGL) -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" crossorigin="anonymous"></script>
+
+  <!-- Leaflet CSS + JS -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="anonymous" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/sp1c="
+          crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+
+<!-- ======================================================
+     Navbar
+     ====================================================== -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+    </svg>
+    Engine Monitor
+  </a>
+
+  <div class="aircraft-switcher" id="aircraft-switcher">
+    <!-- Populated by JS -->
+  </div>
+
+  <div class="navbar-right">
+    <span class="status-badge" id="status-badge">Loading…</span>
+  </div>
+</nav>
+
+<!-- ======================================================
+     Main Layout
+     ====================================================== -->
+<div class="layout">
+
+  <!-- Sidebar: flight list -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title" id="sidebar-title">Flights</div>
+      <input
+        type="search"
+        class="search-input"
+        id="search-input"
+        placeholder="Search flights…"
+        autocomplete="off"
+      />
+    </div>
+    <div class="flight-list" id="flight-list">
+      <div class="no-flights">Loading flight list…</div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content" id="content">
+
+    <!-- Placeholder before a flight is selected -->
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">✈</div>
+      <div class="placeholder-title">Select a flight</div>
+      <div class="placeholder-desc">
+        Choose a flight from the list on the left to view engine,
+        electrical, and fuel data.
+      </div>
+    </div>
+
+    <!-- Flight header (hidden until flight loaded) -->
+    <div class="flight-header" id="flight-header" style="display:none">
+      <div class="flight-header-title" id="flight-title">—</div>
+      <div class="flight-header-meta" id="flight-meta"></div>
+    </div>
+
+    <!-- Charts container (hidden until flight loaded) -->
+    <div class="charts-container" id="charts-container" style="display:none">
+
+      <!-- ADS-B Map + Altitude (shown only when has_adsb=true) -->
+      <div class="map-row" id="map-row" style="display:none">
+        <div class="map-pane" style="position:relative">
+          <div class="map-row-header">📡 ADS-B Track</div>
+          <div id="map-leaflet"></div>
+        </div>
+        <div class="altitude-pane">
+          <div id="altitude-chart" class="chart-div" style="height:260px"></div>
+        </div>
+      </div>
+
+      <!-- Engine panel -->
+      <div class="chart-panel" id="engine-panel">
+        <div class="chart-panel-header" onclick="togglePanel('engine-panel')">
+          <span>🔥</span>
+          <span>Engine</span>
+          <div class="legend-pills" id="engine-legend"></div>
+          <span class="panel-toggle">▾</span>
+        </div>
+        <div class="chart-body">
+          <div id="engine-chart" class="chart-div"></div>
+        </div>
+      </div>
+
+      <!-- Electrical panel -->
+      <div class="chart-panel" id="electrical-panel">
+        <div class="chart-panel-header" onclick="togglePanel('electrical-panel')">
+          <span>⚡</span>
+          <span>Electrical System</span>
+          <div class="legend-pills" id="electrical-legend"></div>
+          <span class="panel-toggle">▾</span>
+        </div>
+        <div class="chart-body">
+          <div id="electrical-chart" class="chart-div"></div>
+        </div>
+      </div>
+
+      <!-- Fuel panel -->
+      <div class="chart-panel" id="fuel-panel">
+        <div class="chart-panel-header" onclick="togglePanel('fuel-panel')">
+          <span>⛽</span>
+          <span>Fuel System</span>
+          <div class="legend-pills" id="fuel-legend"></div>
+          <span class="panel-toggle">▾</span>
+        </div>
+        <div class="chart-body">
+          <div id="fuel-chart" class="chart-div"></div>
+        </div>
+      </div>
+
+    </div><!-- /charts-container -->
+  </main>
+</div>
+
+<!-- ======================================================
+     Scripts (order matters)
+     ====================================================== -->
+<script src="js/map.js"></script>
+<script src="js/plots.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

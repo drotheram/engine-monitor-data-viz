@@ -1,0 +1,506 @@
+/* =========================================================
+   Engine Monitor Dashboard — Styles
+   Dark aviation-inspired theme
+   ========================================================= */
+
+:root {
+  --bg-base:        #0d1117;
+  --bg-panel:       #161b22;
+  --bg-card:        #1c2128;
+  --bg-hover:       #21262d;
+  --bg-active:      #1a3a5c;
+  --border:         #30363d;
+  --border-accent:  #0969da;
+
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  --accent-blue:    #388bfd;
+  --accent-orange:  #f78166;
+  --accent-green:   #3fb950;
+  --accent-yellow:  #d29922;
+
+  /* Plotly trace colours */
+  --egt1:  #ff4d4d;
+  --egt2:  #ff8c00;
+  --egt3:  #ffd700;
+  --egt4:  #ff6a3d;
+  --cht1:  #4fc3f7;
+  --cht2:  #00e5ff;
+  --cht3:  #26c6da;
+  --cht4:  #80deea;
+  --rpm:   #ffffff;
+  --flow:  #69db7c;
+  --volts: #ffd43b;
+  --amps:  #ffa94d;
+  --fuel-l:#74c0fc;
+  --fuel-r:#f783ac;
+
+  --sidebar-width:  320px;
+  --navbar-height:  52px;
+  --radius:         6px;
+  --shadow:         0 2px 8px rgba(0,0,0,.5);
+}
+
+/* --------------------------------------------------------
+   Reset / Base
+   -------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 14px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------
+   Navbar
+   -------------------------------------------------------- */
+.navbar {
+  height: var(--navbar-height);
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  flex: 1;
+}
+
+.navbar-brand svg { opacity: .85; }
+
+.aircraft-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-base);
+  padding: 4px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.aircraft-btn {
+  padding: 4px 14px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+  letter-spacing: .5px;
+}
+
+.aircraft-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.aircraft-btn.active {
+  background: var(--bg-active);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px var(--border-accent);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-badge {
+  font-size: .75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------
+   Main Layout
+   -------------------------------------------------------- */
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------
+   Sidebar (flight list)
+   -------------------------------------------------------- */
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: .875rem;
+  outline: none;
+  transition: border-color .15s;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--border-accent); }
+
+.flight-list {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.flight-list::-webkit-scrollbar { width: 6px; }
+.flight-list::-webkit-scrollbar-track { background: transparent; }
+.flight-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.flight-item {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .1s;
+  position: relative;
+}
+
+.flight-item:hover   { background: var(--bg-hover); }
+.flight-item.active  { background: var(--bg-active); border-left: 3px solid var(--border-accent); }
+
+.flight-item-date {
+  font-size: .75rem;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.flight-item-number {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.flight-item-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.flight-stat {
+  font-size: .72rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.flight-stat-icon { opacity: .7; font-size: .8em; }
+
+.adsb-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: .65rem;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(57,188,80,.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(57,188,80,.3);
+}
+
+.no-flights {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .875rem;
+}
+
+/* --------------------------------------------------------
+   Content Area
+   -------------------------------------------------------- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.content::-webkit-scrollbar { width: 6px; }
+.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* --------------------------------------------------------
+   Flight Header
+   -------------------------------------------------------- */
+.flight-header {
+  padding: 14px 20px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.flight-header-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.flight-header-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .8rem;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.meta-pill strong { color: var(--text-primary); }
+
+/* --------------------------------------------------------
+   Empty / Placeholder State
+   -------------------------------------------------------- */
+.placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text-muted);
+  padding: 40px;
+  text-align: center;
+}
+
+.placeholder-icon { font-size: 3rem; opacity: .4; }
+.placeholder-title { font-size: 1.1rem; color: var(--text-secondary); }
+.placeholder-desc  { font-size: .875rem; max-width: 340px; line-height: 1.6; }
+
+/* --------------------------------------------------------
+   Chart Panels
+   -------------------------------------------------------- */
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.chart-panel {
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+}
+
+.chart-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.chart-panel-header:hover { background: var(--bg-hover); }
+
+.panel-toggle {
+  margin-left: auto;
+  opacity: .5;
+  font-size: .7rem;
+  transition: transform .2s;
+}
+
+.chart-panel.collapsed .panel-toggle { transform: rotate(-90deg); }
+.chart-panel.collapsed .chart-body  { display: none; }
+
+.chart-body {
+  position: relative;
+}
+
+.chart-div {
+  width: 100%;
+}
+
+/* Legend pills inside chart header */
+.legend-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: 8px;
+}
+
+.legend-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .7rem;
+  color: var(--text-secondary);
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------
+   Map + Altitude Row
+   -------------------------------------------------------- */
+.map-row {
+  display: flex;
+  height: 260px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+
+.map-pane {
+  flex: 1.4;
+  min-width: 0;
+  position: relative;
+}
+
+.altitude-pane {
+  flex: 1;
+  min-width: 0;
+  border-left: 1px solid var(--border);
+}
+
+#map-leaflet {
+  width: 100%;
+  height: 100%;
+}
+
+.map-row-header {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 500;
+  background: rgba(13,17,23,.85);
+  color: var(--text-secondary);
+  font-size: .7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------
+   Loading Spinner
+   -------------------------------------------------------- */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13,17,23,.7);
+  z-index: 200;
+  border-radius: var(--radius);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --------------------------------------------------------
+   Responsive
+   -------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root { --sidebar-width: 100%; }
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .map-row { flex-direction: column; height: auto; }
+  .altitude-pane { height: 180px; border-left: none; border-top: 1px solid var(--border); }
+}
+
+/* --------------------------------------------------------
+   Leaflet overrides (dark theme)
+   -------------------------------------------------------- */
+.leaflet-tile { filter: brightness(.7) saturate(.5) invert(1) hue-rotate(180deg); }
+.leaflet-container { background: var(--bg-base); }
+.leaflet-popup-content-wrapper { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); }
+.leaflet-popup-tip { background: var(--bg-card); }

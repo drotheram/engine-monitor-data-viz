@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engine Monitor Dashboard</title>
+  <link rel="stylesheet" href="css/app.css" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; height: 100vh; }
+    .landing {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      max-width: 500px;
+    }
+    .landing-icon { font-size: 4rem; }
+    .landing-title { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); }
+    .landing-desc { color: var(--text-secondary); line-height: 1.7; }
+    .aircraft-cards {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .aircraft-card {
+      display: block;
+      text-decoration: none;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 36px;
+      color: var(--text-primary);
+      transition: border-color .2s, background .2s, transform .15s;
+      text-align: center;
+      min-width: 160px;
+    }
+    .aircraft-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card);
+      transform: translateY(-2px);
+    }
+    .aircraft-card-reg {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .aircraft-card-sub {
+      font-size: .8rem;
+      color: var(--text-secondary);
+    }
+    .footer { font-size: .75rem; color: var(--text-muted); margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="landing">
+    <div class="landing-icon">✈</div>
+    <div>
+      <div class="landing-title">Engine Monitor Dashboard</div>
+      <p class="landing-desc">
+        Interactive engine, electrical, and fuel system visualizations
+        from CGR-30P flight data recordings.
+      </p>
+    </div>
+    <div class="aircraft-cards">
+      <a class="aircraft-card" href="viewer.html?aircraft=CGJYY">
+        <div class="aircraft-card-reg">C-GJYY</div>
+        <div class="aircraft-card-sub">View Flights →</div>
+      </a>
+      <a class="aircraft-card" href="viewer.html?aircraft=CFHTI">
+        <div class="aircraft-card-reg">C-FHTI</div>
+        <div class="aircraft-card-sub">View Flights →</div>
+      </a>
+    </div>
+    <div class="footer">Data source: Electronics International CGR-30P</div>
+  </div>
+</body>
+</html>

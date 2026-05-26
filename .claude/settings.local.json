@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xxd)",
+      "Bash(python3 *)",
+      "Bash(pip install *)",
+      "Bash(python *)",
+      "Bash(python3 -m http.server 8765)",
+      "Bash(curl -s http://localhost:8765/viewer.html)",
+      "Bash(curl -s http://localhost:8765/data/CGJYY/manifest.json)",
+      "Bash(curl -s http://localhost:8765/data/CGJYY/Flt916_20260427.json)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

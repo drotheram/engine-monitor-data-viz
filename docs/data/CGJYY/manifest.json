@@ -1,0 +1,423 @@
+{
+  "aircraft": "CGJYY",
+  "generated_utc": "2026-05-26T05:06:40.041656Z",
+  "flight_count": 26,
+  "flights": [
+    {
+      "id": "Flt0945_20260521",
+      "file": "Flt0945_20260521.json",
+      "flight_number": 945,
+      "date": "2026-05-21",
+      "local_time_start": "10:04:28",
+      "zulu_time_start": "17:04:28",
+      "duration_minutes": 26.0,
+      "max_rpm": 2578,
+      "engine_hours": 81.94,
+      "data_points": 313,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0945_20260521F.csv"
+      ]
+    },
+    {
+      "id": "Flt0944_20260520",
+      "file": "Flt0944_20260520.json",
+      "flight_number": 944,
+      "date": "2026-05-20",
+      "local_time_start": "11:42:51",
+      "zulu_time_start": "18:42:51",
+      "duration_minutes": 77.5,
+      "max_rpm": 2568,
+      "engine_hours": 80.66,
+      "data_points": 931,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0944_20260520F.csv"
+      ]
+    },
+    {
+      "id": "Flt0943_20260520",
+      "file": "Flt0943_20260520.json",
+      "flight_number": 943,
+      "date": "2026-05-20",
+      "local_time_start": "08:26:49",
+      "zulu_time_start": "15:26:49",
+      "duration_minutes": 90.2,
+      "max_rpm": 2546,
+      "engine_hours": 79.16,
+      "data_points": 1084,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0943_20260520F.csv"
+      ]
+    },
+    {
+      "id": "Flt0941_20260519",
+      "file": "Flt0941_20260519.json",
+      "flight_number": 941,
+      "date": "2026-05-19",
+      "local_time_start": "10:09:53",
+      "zulu_time_start": "17:09:53",
+      "duration_minutes": 37.2,
+      "max_rpm": 2586,
+      "engine_hours": 78.55,
+      "data_points": 444,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0941_20260519F.csv"
+      ]
+    },
+    {
+      "id": "Flt0938_20260518",
+      "file": "Flt0938_20260518.json",
+      "flight_number": 938,
+      "date": "2026-05-18",
+      "local_time_start": "12:50:35",
+      "zulu_time_start": "19:50:35",
+      "duration_minutes": 68.6,
+      "max_rpm": 2582,
+      "engine_hours": 77.42,
+      "data_points": 824,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0938_20260518F.csv"
+      ]
+    },
+    {
+      "id": "Flt0937_20260518",
+      "file": "Flt0937_20260518.json",
+      "flight_number": 937,
+      "date": "2026-05-18",
+      "local_time_start": "09:25:54",
+      "zulu_time_start": "16:25:54",
+      "duration_minutes": 97.4,
+      "max_rpm": 2659,
+      "engine_hours": 75.81,
+      "data_points": 1170,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0937_20260518F.csv"
+      ]
+    },
+    {
+      "id": "Flt0935_20260510",
+      "file": "Flt0935_20260510.json",
+      "flight_number": 935,
+      "date": "2026-05-10",
+      "local_time_start": "17:47:03",
+      "zulu_time_start": "00:47:03",
+      "duration_minutes": 59.9,
+      "max_rpm": 2628,
+      "engine_hours": 74.92,
+      "data_points": 639,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0935_20260510F.csv"
+      ]
+    },
+    {
+      "id": "Flt0934_20260508",
+      "file": "Flt0934_20260508.json",
+      "flight_number": 934,
+      "date": "2026-05-08",
+      "local_time_start": "12:46:04",
+      "zulu_time_start": "19:46:04",
+      "duration_minutes": 54.0,
+      "max_rpm": 2582,
+      "engine_hours": 74.02,
+      "data_points": 649,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0934_20260508F.csv"
+      ]
+    },
+    {
+      "id": "Flt0933_20260508",
+      "file": "Flt0933_20260508.json",
+      "flight_number": 933,
+      "date": "2026-05-08",
+      "local_time_start": "10:29:30",
+      "zulu_time_start": "17:29:30",
+      "duration_minutes": 53.0,
+      "max_rpm": 2590,
+      "engine_hours": 73.14,
+      "data_points": 637,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0933_20260508F.csv"
+      ]
+    },
+    {
+      "id": "Flt0932_20260508",
+      "file": "Flt0932_20260508.json",
+      "flight_number": 932,
+      "date": "2026-05-08",
+      "local_time_start": "09:17:38",
+      "zulu_time_start": "16:17:38",
+      "duration_minutes": 47.6,
+      "max_rpm": 2569,
+      "engine_hours": 72.35,
+      "data_points": 572,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0932_20260508F.csv"
+      ]
+    },
+    {
+      "id": "Flt0928_20260505",
+      "file": "Flt0928_20260505.json",
+      "flight_number": 928,
+      "date": "2026-05-05",
+      "local_time_start": "09:30:40",
+      "zulu_time_start": "16:30:40",
+      "duration_minutes": 67.0,
+      "max_rpm": 2631,
+      "engine_hours": 71.25,
+      "data_points": 805,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0928_20260505F.csv"
+      ]
+    },
+    {
+      "id": "Flt0923_20260502",
+      "file": "Flt0923_20260502.json",
+      "flight_number": 923,
+      "date": "2026-05-02",
+      "local_time_start": "14:57:45",
+      "zulu_time_start": "21:57:45",
+      "duration_minutes": 57.1,
+      "max_rpm": 2600,
+      "engine_hours": 70.18,
+      "data_points": 686,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0923_20260502F.csv"
+      ]
+    },
+    {
+      "id": "Flt0922_20260502",
+      "file": "Flt0922_20260502.json",
+      "flight_number": 922,
+      "date": "2026-05-02",
+      "local_time_start": "13:28:57",
+      "zulu_time_start": "20:28:57",
+      "duration_minutes": 76.8,
+      "max_rpm": 2584,
+      "engine_hours": 68.91,
+      "data_points": 922,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0922_20260502F.csv"
+      ]
+    },
+    {
+      "id": "Flt0921_20260502",
+      "file": "Flt0921_20260502.json",
+      "flight_number": 921,
+      "date": "2026-05-02",
+      "local_time_start": "09:50:10",
+      "zulu_time_start": "16:50:10",
+      "duration_minutes": 92.8,
+      "max_rpm": 2630,
+      "engine_hours": 67.36,
+      "data_points": 1114,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0921_20260502F.csv"
+      ]
+    },
+    {
+      "id": "Flt0920_20260502",
+      "file": "Flt0920_20260502.json",
+      "flight_number": 920,
+      "date": "2026-05-02",
+      "local_time_start": "08:13:23",
+      "zulu_time_start": "15:13:23",
+      "duration_minutes": 54.0,
+      "max_rpm": 2648,
+      "engine_hours": 66.47,
+      "data_points": 649,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0920_20260502F.csv"
+      ]
+    },
+    {
+      "id": "Flt0918_20260501",
+      "file": "Flt0918_20260501.json",
+      "flight_number": 918,
+      "date": "2026-05-01",
+      "local_time_start": "20:41:50",
+      "zulu_time_start": "03:41:50",
+      "duration_minutes": 80.2,
+      "max_rpm": 2620,
+      "engine_hours": 65.18,
+      "data_points": 948,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0918_20260501F.csv"
+      ]
+    },
+    {
+      "id": "Flt0916_20260427",
+      "file": "Flt0916_20260427.json",
+      "flight_number": 916,
+      "date": "2026-04-27",
+      "local_time_start": "12:47:54",
+      "zulu_time_start": "19:47:54",
+      "duration_minutes": 184.5,
+      "max_rpm": 2630,
+      "engine_hours": 63.55,
+      "data_points": 1178,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0916_20260427F.csv"
+      ]
+    },
+    {
+      "id": "Flt0915_20260426",
+      "file": "Flt0915_20260426.json",
+      "flight_number": 915,
+      "date": "2026-04-26",
+      "local_time_start": "13:01:35",
+      "zulu_time_start": "20:01:35",
+      "duration_minutes": 85.4,
+      "max_rpm": 2639,
+      "engine_hours": 62.12,
+      "data_points": 1026,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0915_20260426F.csv"
+      ]
+    },
+    {
+      "id": "Flt0913_20260425",
+      "file": "Flt0913_20260425.json",
+      "flight_number": 913,
+      "date": "2026-04-25",
+      "local_time_start": "13:29:27",
+      "zulu_time_start": "20:29:27",
+      "duration_minutes": 67.2,
+      "max_rpm": 2562,
+      "engine_hours": 61.01,
+      "data_points": 808,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0913_20260425F.csv"
+      ]
+    },
+    {
+      "id": "Flt0912_20260425",
+      "file": "Flt0912_20260425.json",
+      "flight_number": 912,
+      "date": "2026-04-25",
+      "local_time_start": "09:49:35",
+      "zulu_time_start": "16:49:35",
+      "duration_minutes": 100.8,
+      "max_rpm": 2530,
+      "engine_hours": 59.35,
+      "data_points": 1210,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0912_20260425F.csv"
+      ]
+    },
+    {
+      "id": "Flt0911_20260425",
+      "file": "Flt0911_20260425.json",
+      "flight_number": 911,
+      "date": "2026-04-25",
+      "local_time_start": "08:22:01",
+      "zulu_time_start": "15:22:01",
+      "duration_minutes": 64.2,
+      "max_rpm": 2581,
+      "engine_hours": 58.29,
+      "data_points": 771,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0911_20260425F.csv"
+      ]
+    },
+    {
+      "id": "Flt0909_20260424",
+      "file": "Flt0909_20260424.json",
+      "flight_number": 909,
+      "date": "2026-04-24",
+      "local_time_start": "09:26:20",
+      "zulu_time_start": "16:26:20",
+      "duration_minutes": 197.2,
+      "max_rpm": 2632,
+      "engine_hours": 56.04,
+      "data_points": 1623,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0909_20260424F.csv"
+      ]
+    },
+    {
+      "id": "Flt0907_20260420",
+      "file": "Flt0907_20260420.json",
+      "flight_number": 907,
+      "date": "2026-04-20",
+      "local_time_start": "11:19:18",
+      "zulu_time_start": "18:19:18",
+      "duration_minutes": 129.2,
+      "max_rpm": 2705,
+      "engine_hours": 54.13,
+      "data_points": 1388,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0907_20260420F.csv"
+      ]
+    },
+    {
+      "id": "Flt0905_20260419",
+      "file": "Flt0905_20260419.json",
+      "flight_number": 905,
+      "date": "2026-04-19",
+      "local_time_start": "20:14:46",
+      "zulu_time_start": "03:14:46",
+      "duration_minutes": 72.2,
+      "max_rpm": 2654,
+      "engine_hours": 52.89,
+      "data_points": 868,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0905_20260419F.csv"
+      ]
+    },
+    {
+      "id": "Flt0903_20260417",
+      "file": "Flt0903_20260417.json",
+      "flight_number": 903,
+      "date": "2026-04-17",
+      "local_time_start": "22:18:36",
+      "zulu_time_start": "05:18:36",
+      "duration_minutes": 59.9,
+      "max_rpm": 2596,
+      "engine_hours": 52.04,
+      "data_points": 627,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0903_20260417F.csv"
+      ]
+    },
+    {
+      "id": "Flt0902_20260415",
+      "file": "Flt0902_20260415.json",
+      "flight_number": 902,
+      "date": "2026-04-15",
+      "local_time_start": "14:06:33",
+      "zulu_time_start": "21:06:33",
+      "duration_minutes": 80.8,
+      "max_rpm": 2580,
+      "engine_hours": 50.83,
+      "data_points": 873,
+      "has_adsb": false,
+      "source_files": [
+        "Flt0902_20260415F.csv"
+      ]
+    }
+  ]
+}
