@@ -148,6 +148,22 @@ const PlotController = (() => {
         yaxis: "y3",
         hoverTemplate: _makeHoverTemplate("Flow","GPH",1),
       }),
+      // Oil P — hidden y-axis (PSI)
+      _trace("Oil P",  ts, d.oil_p, C.oil_p, {
+        yaxis: "y4", dash: "dot",
+        hoverTemplate: _makeHoverTemplate("Oil P","PSI"),
+      }),
+      // Oil T — hidden y-axis (°F)
+      _trace("Oil T",  ts, d.oil_t, C.oil_t, {
+        yaxis: "y5", dash: "dot",
+        hoverTemplate: _makeHoverTemplate("Oil T","°F"),
+      }),
+      // Carb T — hidden y-axis (°C), legend-only by default
+      _trace("Carb T", ts, d.carb_t, C.carb, {
+        yaxis: "y6", dash: "dot",
+        visible: "legendonly",
+        hoverTemplate: _makeHoverTemplate("Carb T","°C",1),
+      }),
     ];
 
     const layout = {
@@ -174,7 +190,28 @@ const PlotController = (() => {
         position: 0.98,
         range: [0, 20],
         showgrid: false,
-        visible: false,   // hidden by default, shows in legend/hover
+        visible: false,
+      },
+      yaxis4: {
+        ...BASE_LAYOUT.yaxis,
+        overlaying: "y",
+        side: "right",
+        showgrid: false,
+        visible: false,   // Oil P axis (PSI) — hidden, shows in hover/legend
+      },
+      yaxis5: {
+        ...BASE_LAYOUT.yaxis,
+        overlaying: "y",
+        side: "right",
+        showgrid: false,
+        visible: false,   // Oil T axis (°F) — hidden, shows in hover/legend
+      },
+      yaxis6: {
+        ...BASE_LAYOUT.yaxis,
+        overlaying: "y",
+        side: "right",
+        showgrid: false,
+        visible: false,   // Carb T axis (°C) — hidden, shows in hover/legend
       },
     };
 
@@ -205,14 +242,14 @@ const PlotController = (() => {
       yaxis: {
         ...BASE_LAYOUT.yaxis,
         title: { text: "Volts (V)", font: { size: 10 } },
-        range: [10, 16],
+        autorange: true,
       },
       yaxis2: {
         ...BASE_LAYOUT.yaxis,
         title: { text: "Amps (A)", font: { size: 10 }, standoff: 4 },
         overlaying: "y",
         side: "right",
-        range: [-5, 30],
+        autorange: true,
         showgrid: false,
       },
     };
@@ -241,19 +278,6 @@ const PlotController = (() => {
         yaxis: "y3", dash: "dot",
         hoverTemplate: _makeHoverTemplate("OAT","°C",1),
       }),
-      _trace("Oil P",  ts, d.oil_p,  C.oil_p, {
-        yaxis: "y4", dash: "dot",
-        hoverTemplate: _makeHoverTemplate("Oil P","PSI"),
-      }),
-      _trace("Oil T",  ts, d.oil_t,  C.oil_t, {
-        yaxis: "y5", dash: "dot",
-        hoverTemplate: _makeHoverTemplate("Oil T","°F"),
-      }),
-      _trace("Carb T", ts, d.carb_t, C.carb, {
-        yaxis: "y6", dash: "dot",
-        visible: "legendonly",
-        hoverTemplate: _makeHoverTemplate("Carb T","°C",1),
-      }),
     ];
 
     const layout = {
@@ -276,23 +300,6 @@ const PlotController = (() => {
         overlaying: "y", side: "right",
         position: 0.93, visible: false, showgrid: false,
         range: [-30, 50],
-      },
-      yaxis4: {
-        ...BASE_LAYOUT.yaxis,
-        overlaying: "y", side: "left",
-        visible: false, showgrid: false,
-        range: [0, 120],
-      },
-      yaxis5: {
-        ...BASE_LAYOUT.yaxis,
-        overlaying: "y", side: "left",
-        visible: false, showgrid: false,
-        range: [0, 250],
-      },
-      yaxis6: {
-        ...BASE_LAYOUT.yaxis,
-        overlaying: "y", side: "right",
-        visible: false, showgrid: false,
       },
     };
 
@@ -340,6 +347,37 @@ const PlotController = (() => {
   // -------------------------------------------------------
   function linkCharts(divIds, onHoverCallback) {
     let _syncing = false;
+    let _rafId   = null;
+
+    // Lightweight CSS crosshair — avoids the expensive Plotly.Fx.hover() relay
+    function _showCrosshair(xval) {
+      divIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const fl = el._fullLayout;
+        if (!fl || !fl.xaxis || !fl.margin) return;
+        let xh = el.querySelector(".x-crosshair");
+        if (!xh) {
+          xh = document.createElement("div");
+          xh.className = "x-crosshair";
+          el.appendChild(xh);
+        }
+        const px = fl.margin.l + fl.xaxis.l2p(xval);
+        xh.style.left    = px + "px";
+        xh.style.top     = fl.margin.t + "px";
+        xh.style.height  = (fl.height - fl.margin.t - fl.margin.b) + "px";
+        xh.style.display = "block";
+      });
+    }
+
+    function _hideCrosshair() {
+      divIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const xh = el.querySelector(".x-crosshair");
+        if (xh) xh.style.display = "none";
+      });
+    }
 
     const handler = (evt, sourceId) => {
       if (_syncing) return;
@@ -367,23 +405,17 @@ const PlotController = (() => {
 
       el.on("plotly_hover", data => {
         if (!data.points || !data.points.length) return;
-        const ts = data.points[0].x;
-        // Relay to other charts (show spike)
-        divIds.forEach(otherId => {
-          if (otherId === id) return;
-          const otherEl = document.getElementById(otherId);
-          if (!otherEl || !otherEl.data) return;
-          Plotly.Fx.hover(otherEl, [{ curveNumber: 0, pointNumber: 0, xval: ts }]);
+        const xval = data.points[0].x;
+        if (_rafId) cancelAnimationFrame(_rafId);
+        _rafId = requestAnimationFrame(() => {
+          _showCrosshair(xval);
+          if (onHoverCallback) onHoverCallback(xval);
         });
-        if (onHoverCallback) onHoverCallback(ts);
       });
 
       el.on("plotly_unhover", () => {
-        divIds.forEach(otherId => {
-          if (otherId === id) return;
-          const otherEl = document.getElementById(otherId);
-          if (otherEl && otherEl.data) Plotly.Fx.unhover(otherEl);
-        });
+        if (_rafId) cancelAnimationFrame(_rafId);
+        _rafId = requestAnimationFrame(_hideCrosshair);
       });
     });
   }
