@@ -3,18 +3,14 @@
     "CGJYY": {
       "registration": "C-GJYY",
       "label": "C-GJYY",
-      "icao24": "TODO_LOOKUP",
       "engine_monitor": "CGR-30P",
-      "adsb_enabled": true,
-      "notes": "Look up ICAO24 at: https://www.airframes.io or https://www.planespotters.net"
+      "adsb_enabled": true
     },
     "CFHTI": {
       "registration": "C-FHTI",
       "label": "C-FHTI",
-      "icao24": "TODO_LOOKUP",
       "engine_monitor": "CGR-30P",
-      "adsb_enabled": true,
-      "notes": "Look up ICAO24 at: https://www.airframes.io or https://www.planespotters.net"
+      "adsb_enabled": true
     }
   },
   "processing": {
@@ -26,7 +22,14 @@
     "continuation_gap_seconds": 30
   },
   "adsb": {
-    "provider": "opensky",
-    "base_url": "https://opensky-network.org/api"
+    "provider": "flightaware",
+    "flightaware_base_url": "https://aeroapi.flightaware.com/aeroapi",
+    "time_match_tolerance_minutes": 30,
+    "notes": [
+      "Get a free API key at: https://www.flightaware.com/aeroapi/signup/personal",
+      "Add it as a GitHub Secret named FLIGHTAWARE_API_KEY",
+      "Free tier: $5/month credit (~80 flights). ADS-B feeders get $10/month.",
+      "OpenSky fallback is also supported: add OPENSKY_USER + OPENSKY_PASS secrets."
+    ]
   }
 }

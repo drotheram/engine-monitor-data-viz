@@ -21,6 +21,11 @@ on:
         required: false
         default: false
         type: boolean
+      refetch_adsb:
+        description: "Re-fetch ADS-B data even if already cached"
+        required: false
+        default: false
+        type: boolean
 
 # Permissions needed to push back to the repo and deploy Pages
 permissions:
@@ -63,10 +68,13 @@ jobs:
             ${{ github.event.inputs.force_reprocess == 'true' && '--force' || '' }}
 
       - name: Fetch ADS-B track data (optional)
-        run: python scripts/fetch_adsb.py
+        run: |
+          python scripts/fetch_adsb.py \
+            ${{ github.event.inputs.refetch_adsb == 'true' && '--refetch' || '' }}
         env:
-          OPENSKY_USER: ${{ secrets.OPENSKY_USER }}
-          OPENSKY_PASS: ${{ secrets.OPENSKY_PASS }}
+          FLIGHTAWARE_API_KEY: ${{ secrets.FLIGHTAWARE_API_KEY }}
+          OPENSKY_USER:        ${{ secrets.OPENSKY_USER }}
+          OPENSKY_PASS:        ${{ secrets.OPENSKY_PASS }}
         # Don't fail the whole workflow if ADS-B fetch fails
         continue-on-error: true
 
