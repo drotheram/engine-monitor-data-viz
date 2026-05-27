@@ -67,6 +67,16 @@ jobs:
           python scripts/process_logs.py \
             ${{ github.event.inputs.force_reprocess == 'true' && '--force' || '' }}
 
+      - name: Diagnose FlightAware API key
+        run: |
+          echo "Key length: ${#FLIGHTAWARE_API_KEY}"
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "x-apikey: ${FLIGHTAWARE_API_KEY}" \
+            "https://aeroapi.flightaware.com/aeroapi/flights/CGJYY?max_pages=1")
+          echo "FlightAware curl response: $HTTP"
+        env:
+          FLIGHTAWARE_API_KEY: ${{ secrets.FLIGHTAWARE_API_KEY }}
+
       - name: Fetch ADS-B track data (optional)
         run: |
           python scripts/fetch_adsb.py \
