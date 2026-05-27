@@ -1,6 +1,6 @@
 {
   "aircraft": "CGJYY",
-  "generated_utc": "2026-05-27T04:59:28.616899Z",
+  "generated_utc": "2026-05-27T16:29:38.350983Z",
   "flight_count": 26,
   "flights": [
     {
@@ -94,7 +94,7 @@
       "max_rpm": 2659,
       "engine_hours": 75.81,
       "data_points": 1170,
-      "has_adsb": false,
+      "has_adsb": true,
       "source_files": [
         "Flt0937_20260518F.csv"
       ]
