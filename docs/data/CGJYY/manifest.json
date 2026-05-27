@@ -1,6 +1,6 @@
 {
   "aircraft": "CGJYY",
-  "generated_utc": "2026-05-27T04:45:25.277177Z",
+  "generated_utc": "2026-05-27T04:59:28.616899Z",
   "flight_count": 26,
   "flights": [
     {
@@ -30,7 +30,7 @@
       "max_rpm": 2568,
       "engine_hours": 80.66,
       "data_points": 931,
-      "has_adsb": false,
+      "has_adsb": true,
       "source_files": [
         "Flt0944_20260520F.csv"
       ]
@@ -46,7 +46,7 @@
       "max_rpm": 2546,
       "engine_hours": 79.16,
       "data_points": 1084,
-      "has_adsb": false,
+      "has_adsb": true,
       "source_files": [
         "Flt0943_20260520F.csv"
       ]
@@ -62,7 +62,7 @@
       "max_rpm": 2586,
       "engine_hours": 78.55,
       "data_points": 444,
-      "has_adsb": false,
+      "has_adsb": true,
       "source_files": [
         "Flt0941_20260519F.csv"
       ]
