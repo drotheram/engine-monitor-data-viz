@@ -379,22 +379,35 @@ const PlotController = (() => {
       });
     }
 
-    const handler = (evt, sourceId) => {
+    // async so we can await all Plotly.relayout() Promises before clearing
+    // _syncing — Plotly fires plotly_relayout on target charts asynchronously
+    // (via rAF), so a synchronous _syncing = false lets the cascade fire.
+    const handler = async (evt, sourceId) => {
       if (_syncing) return;
       _syncing = true;
 
-      // Sync zoom/pan
-      if (evt["xaxis.range[0]"] !== undefined) {
-        const update = {
-          "xaxis.range[0]": evt["xaxis.range[0]"],
-          "xaxis.range[1]": evt["xaxis.range[1]"],
-        };
-        divIds.forEach(id => { if (id !== sourceId) Plotly.relayout(id, update); });
+      try {
+        const promises = [];
+        // Sync zoom
+        if (evt["xaxis.range[0]"] !== undefined) {
+          const update = {
+            "xaxis.range[0]": evt["xaxis.range[0]"],
+            "xaxis.range[1]": evt["xaxis.range[1]"],
+          };
+          divIds.forEach(id => {
+            if (id !== sourceId) promises.push(Plotly.relayout(id, update));
+          });
+        }
+        // Sync reset-to-autorange (double-click)
+        if (evt["xaxis.autorange"]) {
+          divIds.forEach(id => {
+            if (id !== sourceId) promises.push(Plotly.relayout(id, { "xaxis.autorange": true }));
+          });
+        }
+        await Promise.all(promises);
+      } finally {
+        _syncing = false;
       }
-      if (evt["xaxis.autorange"]) {
-        divIds.forEach(id => { if (id !== sourceId) Plotly.relayout(id, { "xaxis.autorange": true }); });
-      }
-      _syncing = false;
     };
 
     divIds.forEach(id => {
