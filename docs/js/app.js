@@ -193,6 +193,31 @@
   }
 
   // -----------------------------------------------------------------------
+  // Compute the Unix timestamp (seconds, UTC) of ts=0 in the engine log.
+  //
+  // The engine log's ts array is seconds elapsed from its first data point
+  // (after idle-tail cropping). data.time[0] is that first point's Zulu
+  // HH:MM:SS, combined with meta.date to give an absolute reference.
+  //
+  // This is needed because adsbData.start_ts is the FlightAware *search*
+  // window start (= file-header Zulu time − 15 min), which can be 15–30+
+  // minutes earlier than ts=0, causing the altitude track and map cursor
+  // to appear temporally offset from the engine log plots.
+  // -----------------------------------------------------------------------
+  function computeEpochStart(data) {
+    try {
+      const date = data.meta && data.meta.date;         // "YYYY-MM-DD" (Zulu)
+      const times = data.time;
+      const firstTime = times && times.find(t => t != null); // "HH:MM:SS" Zulu
+      if (!date || !firstTime) return null;
+      const unix = Math.floor(
+        new Date(`${date}T${firstTime}Z`).getTime() / 1000
+      );
+      return Number.isFinite(unix) ? unix : null;
+    } catch { return null; }
+  }
+
+  // -----------------------------------------------------------------------
   // Render flight data
   // -----------------------------------------------------------------------
   function renderFlight(data, adsbData) {
@@ -241,13 +266,18 @@
     if (adsbData && adsbData.track && adsbData.track.length > 0) {
       mapRow.style.display = "";
 
+      // epochStart: Unix timestamp of engine-log ts=0 (first data point after
+      // cropping). Used to align ADS-B absolute timestamps with the relative
+      // engine-log timeline.  Falls back to adsbData.start_ts if unavailable.
+      const epochStart = computeEpochStart(data) || adsbData.start_ts || 0;
+
       // Init map once
       if (!mapInitialised) {
         MapController.init("map-leaflet");
         mapInitialised = true;
       }
-      MapController.loadTrack(adsbData, meta);
-      PlotController.renderAltitude("altitude-chart", adsbData, meta);
+      MapController.loadTrack(adsbData, meta, epochStart);
+      PlotController.renderAltitude("altitude-chart", adsbData, meta, epochStart);
       linkedIds.push("altitude-chart");
     } else {
       mapRow.style.display = "none";
@@ -256,9 +286,7 @@
 
     // Link all charts together; on hover update map cursor
     PlotController.linkCharts(linkedIds, (tsSeconds) => {
-      if (adsbData && adsbData.start_ts) {
-        MapController.setCursor(tsSeconds);
-      }
+      if (adsbData) MapController.setCursor(tsSeconds);
     });
 
     // Update sidebar title

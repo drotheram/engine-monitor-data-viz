@@ -309,11 +309,16 @@ const PlotController = (() => {
   // -------------------------------------------------------
   // Altitude Chart (from ADS-B)
   // -------------------------------------------------------
-  function renderAltitude(divId, adsbData, flightMeta) {
+  function renderAltitude(divId, adsbData, flightMeta, epochStart) {
     const track = (adsbData.track || []).filter(p => p.alt_m != null);
     if (track.length === 0) return;
 
-    const startTs = adsbData.start_ts || 0;
+    // epochStart: Unix timestamp of engine-log ts=0 (first data point after
+    // idle-tail crop). Subtracting it from each ADS-B point's absolute
+    // timestamp converts to the same "seconds from log start" axis used by
+    // the engine/electrical/fuel charts.  Falls back to adsbData.start_ts
+    // (= file-header Zulu − 15 min) for older data files without epochStart.
+    const startTs = epochStart || adsbData.start_ts || 0;
     const ts    = track.map(p => p.ts - startTs);
     const altFt = track.map(p => Math.round(p.alt_m * 3.28084));
 

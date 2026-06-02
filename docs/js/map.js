@@ -13,7 +13,8 @@ const MapController = (() => {
   let _trackLayer   = null;
   let _cursorMarker = null;
   let _trackData    = null;   // sorted array of { ts, lat, lon, alt_m }
-  let _startTs      = 0;      // flight start Unix timestamp (Zulu)
+  let _epochStart   = 0;      // Unix timestamp of engine-log ts=0 (used to map
+                               // hover seconds → absolute ADS-B timestamp)
 
   // Interpolate lat/lon/alt at a given Unix timestamp
   function _interpolate(ts) {
@@ -68,7 +69,7 @@ const MapController = (() => {
     }).addTo(_map);
   }
 
-  function loadTrack(adsbData, flightMeta) {
+  function loadTrack(adsbData, flightMeta, epochStart) {
     if (!_map) return;
     clear();
 
@@ -76,7 +77,9 @@ const MapController = (() => {
       .filter(p => p.lat != null && p.lon != null)
       .sort((a, b) => a.ts - b.ts);
 
-    _startTs = adsbData.start_ts || 0;
+    // epochStart is the Unix timestamp of engine-log ts=0 — aligns the ADS-B
+    // absolute timestamps with the engine log's relative timeline.
+    _epochStart = epochStart || adsbData.start_ts || 0;
 
     if (_trackData.length === 0) return;
 
@@ -108,11 +111,13 @@ const MapController = (() => {
 
   /**
    * Move cursor marker on the map.
-   * @param {number} seconds_from_start - x value from Plotly hover (seconds elapsed)
+   * @param {number} seconds_from_start - x value from Plotly hover (seconds elapsed
+   *   from engine-log ts=0).  Added to _epochStart to get the absolute Unix
+   *   timestamp for interpolating the ADS-B track.
    */
   function setCursor(seconds_from_start) {
     if (!_map || !_trackData || _trackData.length === 0) return;
-    const ts = _startTs + seconds_from_start;
+    const ts = _epochStart + seconds_from_start;
     const pt = _interpolate(ts);
     if (!pt) return;
 
@@ -132,8 +137,8 @@ const MapController = (() => {
   function clear() {
     if (_trackLayer) { _trackLayer.remove(); _trackLayer = null; }
     if (_cursorMarker) { _cursorMarker.remove(); _cursorMarker = null; }
-    _trackData = null;
-    _startTs   = 0;
+    _trackData   = null;
+    _epochStart  = 0;
   }
 
   return { init, loadTrack, setCursor, clear };
