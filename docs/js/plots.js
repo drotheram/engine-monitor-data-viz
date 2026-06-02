@@ -319,8 +319,16 @@ const PlotController = (() => {
     // the engine/electrical/fuel charts.  Falls back to adsbData.start_ts
     // (= file-header Zulu − 15 min) for older data files without epochStart.
     const startTs = epochStart || adsbData.start_ts || 0;
-    const ts    = track.map(p => p.ts - startTs);
-    const altFt = track.map(p => Math.round(p.alt_m * 3.28084));
+    const ts = track.map(p => p.ts - startTs);
+
+    // Altitude unit detection: the FlightAware API returns altitude in thousands
+    // of feet. Early versions of fetch_adsb.py stored this raw value directly
+    // (so alt_m=4.6 really means 4,600 ft). Newer versions will store proper
+    // metres (alt_m≈1402 for 4,600 ft). Detect by whether max(alt_m) < 100.
+    const maxAltM = Math.max(...track.map(p => p.alt_m || 0));
+    const altFt = maxAltM < 100
+      ? track.map(p => Math.round((p.alt_m || 0) * 1000))      // legacy kft → ft
+      : track.map(p => Math.round((p.alt_m || 0) * 3.28084));  // metres → ft
 
     const traces = [{
       name: "Altitude",
@@ -367,8 +375,15 @@ const PlotController = (() => {
           xh.className = "x-crosshair";
           el.appendChild(xh);
         }
-        const px = fl.margin.l + fl.xaxis.l2p(xval);
-        xh.style.left    = px + "px";
+        // Hide if xval falls outside this chart's visible x range
+        // (e.g. altitude chart has no data during ground taxi at ts=0)
+        const pxOffset = fl.xaxis.l2p(xval);
+        const plotW    = fl.width - fl.margin.l - fl.margin.r;
+        if (pxOffset < 0 || pxOffset > plotW) {
+          xh.style.display = "none";
+          return;
+        }
+        xh.style.left    = (fl.margin.l + pxOffset) + "px";
         xh.style.top     = fl.margin.t + "px";
         xh.style.height  = (fl.height - fl.margin.t - fl.margin.b) + "px";
         xh.style.display = "block";

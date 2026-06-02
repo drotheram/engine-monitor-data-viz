@@ -206,13 +206,21 @@
   // -----------------------------------------------------------------------
   function computeEpochStart(data) {
     try {
-      const date = data.meta && data.meta.date;         // "YYYY-MM-DD" (Zulu)
+      const date = data.meta && data.meta.date;         // "YYYY-MM-DD" local date
       const times = data.time;
-      const firstTime = times && times.find(t => t != null); // "HH:MM:SS" Zulu
+      const firstTime = times && times.find(t => t != null); // "HH:MM:SS" LOCAL time
       if (!date || !firstTime) return null;
-      const unix = Math.floor(
+
+      // data.time[] stores LOCAL time (CGR-30P records in local clock).
+      // Treat it as UTC so Date can parse it, then subtract the zulu offset
+      // to shift from local → UTC.
+      //   zulu_offset_hours = local − UTC  (e.g. PDT = −7)
+      //   UTC unix = (local parsed as UTC) − zulu_offset_hours × 3600
+      const zuluOffset = data.meta.zulu_offset_hours || 0;
+      const localAsUtc = Math.floor(
         new Date(`${date}T${firstTime}Z`).getTime() / 1000
       );
+      const unix = localAsUtc - zuluOffset * 3600;
       return Number.isFinite(unix) ? unix : null;
     } catch { return null; }
   }

@@ -211,8 +211,10 @@ def fetch_fa_track(fa_flight_id: str, session: requests.Session) -> list[dict]:
         lon = p.get("longitude")
         if lat is None or lon is None:
             continue
-        alt_ft = p.get("altitude")   # FlightAware returns feet
-        alt_m  = round(alt_ft * 0.3048, 1) if alt_ft is not None else None
+        # FlightAware AeroAPI returns altitude in thousands of feet (kft).
+        # e.g. altitude=4.6 means 4,600 ft MSL.  Convert: kft → ft → metres.
+        alt_kft = p.get("altitude")
+        alt_m   = round(alt_kft * 1000 * 0.3048, 1) if alt_kft is not None else None
         track.append({
             "ts":      int(ts),
             "lat":     round(float(lat), 6),

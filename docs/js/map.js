@@ -16,12 +16,12 @@ const MapController = (() => {
   let _epochStart   = 0;      // Unix timestamp of engine-log ts=0 (used to map
                                // hover seconds → absolute ADS-B timestamp)
 
-  // Interpolate lat/lon/alt at a given Unix timestamp
+  // Interpolate lat/lon/alt/heading at a given Unix timestamp
   function _interpolate(ts) {
     if (!_trackData || _trackData.length === 0) return null;
     if (ts <= _trackData[0].ts) return _trackData[0];
     if (ts >= _trackData[_trackData.length - 1].ts) return _trackData[_trackData.length - 1];
-    // Binary search
+    // Binary search for bracketing points
     let lo = 0, hi = _trackData.length - 1;
     while (lo < hi - 1) {
       const mid = (lo + hi) >> 1;
@@ -29,12 +29,25 @@ const MapController = (() => {
     }
     const a = _trackData[lo], b = _trackData[hi];
     const frac = (ts - a.ts) / (b.ts - a.ts);
+
+    // Heading: interpolate with wraparound (e.g. 350° → 10° goes through 0°)
+    let heading = null;
+    if (a.heading != null && b.heading != null) {
+      let dh = b.heading - a.heading;
+      if (dh >  180) dh -= 360;
+      if (dh < -180) dh += 360;
+      heading = ((a.heading + frac * dh) + 360) % 360;
+    } else {
+      heading = a.heading != null ? a.heading : b.heading;
+    }
+
     return {
-      lat:   a.lat   + frac * (b.lat   - a.lat),
-      lon:   a.lon   + frac * (b.lon   - a.lon),
-      alt_m: a.alt_m != null && b.alt_m != null
-               ? a.alt_m + frac * (b.alt_m - a.alt_m)
-               : null,
+      lat:     a.lat   + frac * (b.lat   - a.lat),
+      lon:     a.lon   + frac * (b.lon   - a.lon),
+      alt_m:   a.alt_m != null && b.alt_m != null
+                 ? a.alt_m + frac * (b.alt_m - a.alt_m)
+                 : null,
+      heading,
     };
   }
 
