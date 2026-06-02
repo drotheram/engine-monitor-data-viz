@@ -379,35 +379,43 @@ const PlotController = (() => {
       });
     }
 
-    // async so we can await all Plotly.relayout() Promises before clearing
-    // _syncing — Plotly fires plotly_relayout on target charts asynchronously
-    // (via rAF), so a synchronous _syncing = false lets the cascade fire.
-    const handler = async (evt, sourceId) => {
-      if (_syncing) return;
-      _syncing = true;
+    // Cascade prevention: Plotly fires plotly_relayout on target charts via
+    // requestAnimationFrame (rAF). async/await clears _syncing when the Promise
+    // resolves — but Promise resolution is a microtask that runs *before* the
+    // next rAF, so cascade events still slip through with _syncing=false.
+    //
+    // Fix: use setTimeout(0) to clear _syncing. setTimeout is a macrotask that
+    // fires AFTER the current rendering phase (rAF → microtasks → rendering →
+    // next macrotask), guaranteeing _syncing stays true through the entire rAF
+    // cycle where Plotly emits the cascade plotly_relayout events.
+    let _clearTimer = null;
 
-      try {
-        const promises = [];
-        // Sync zoom
-        if (evt["xaxis.range[0]"] !== undefined) {
-          const update = {
-            "xaxis.range[0]": evt["xaxis.range[0]"],
-            "xaxis.range[1]": evt["xaxis.range[1]"],
-          };
-          divIds.forEach(id => {
-            if (id !== sourceId) promises.push(Plotly.relayout(id, update));
-          });
-        }
-        // Sync reset-to-autorange (double-click)
-        if (evt["xaxis.autorange"]) {
-          divIds.forEach(id => {
-            if (id !== sourceId) promises.push(Plotly.relayout(id, { "xaxis.autorange": true }));
-          });
-        }
-        await Promise.all(promises);
-      } finally {
-        _syncing = false;
+    const handler = (evt, sourceId) => {
+      if (_syncing) return;
+
+      let update = null;
+      if (evt["xaxis.range[0]"] !== undefined) {
+        update = {
+          "xaxis.range[0]": evt["xaxis.range[0]"],
+          "xaxis.range[1]": evt["xaxis.range[1]"],
+        };
+      } else if (evt["xaxis.autorange"]) {
+        update = { "xaxis.autorange": true };
+      } else {
+        return;
       }
+
+      _syncing = true;
+      if (_clearTimer) { clearTimeout(_clearTimer); _clearTimer = null; }
+
+      const targets = divIds.filter(id => id !== sourceId);
+      Promise.all(targets.map(id => Plotly.relayout(id, update)))
+        .finally(() => {
+          _clearTimer = setTimeout(() => {
+            _clearTimer = null;
+            _syncing = false;
+          }, 0);
+        });
     };
 
     divIds.forEach(id => {
