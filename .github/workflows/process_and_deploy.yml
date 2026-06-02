@@ -67,25 +67,31 @@ jobs:
           python scripts/process_logs.py \
             ${{ github.event.inputs.force_reprocess == 'true' && '--force' || '' }}
 
-      - name: Diagnose FlightAware API key
-        run: |
-          echo "Key length: ${#FLIGHTAWARE_API_KEY}"
-          HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "x-apikey: ${FLIGHTAWARE_API_KEY}" \
-            "https://aeroapi.flightaware.com/aeroapi/flights/CGJYY?max_pages=1")
-          echo "FlightAware curl response: $HTTP"
-        env:
-          FLIGHTAWARE_API_KEY: ${{ secrets.FLIGHTAWARE_API_KEY }}
-
       - name: Fetch ADS-B track data (optional)
         run: |
-          python scripts/fetch_adsb.py \
-            ${{ github.event.inputs.refetch_adsb == 'true' && '--refetch' || '' }}
+          if [ "${{ github.event.inputs.refetch_adsb }}" = "true" ]; then
+            # Manual refetch: re-download all ADS-B tracks
+            echo "Manual refetch requested"
+            python scripts/fetch_adsb.py --refetch
+
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger (no refetch): pick up any uncached flights
+            echo "Manual dispatch — fetching uncached flights"
+            python scripts/fetch_adsb.py
+
+          elif git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
+               -- raw_data/ 2>/dev/null | grep -q .; then
+            # Push that included new/changed raw log files
+            echo "raw_data changes detected — fetching ADS-B for new flights"
+            python scripts/fetch_adsb.py
+
+          else
+            echo "No raw_data changes in this push — skipping ADS-B fetch"
+          fi
         env:
           FLIGHTAWARE_API_KEY: ${{ secrets.FLIGHTAWARE_API_KEY }}
           OPENSKY_USER:        ${{ secrets.OPENSKY_USER }}
           OPENSKY_PASS:        ${{ secrets.OPENSKY_PASS }}
-        # Don't fail the whole workflow if ADS-B fetch fails
         continue-on-error: true
 
       - name: Commit processed data back to repo
