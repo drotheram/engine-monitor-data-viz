@@ -51,11 +51,16 @@ const MapController = (() => {
     };
   }
 
-  // Custom lightweight aircraft SVG icon
+  // Custom lightweight aircraft SVG icon.
+  // The Material-Icons "flight" path has its nose at the top-centre of the
+  // 24×24 viewBox (y≈2), so it naturally points NORTH at 0° rotation.
+  // SVG rotate() is clockwise, matching compass headings, so we pass heading
+  // directly with NO offset.  (The previous +45 was erroneous and caused
+  // the icon to always point 45° clockwise of the actual track.)
   function _makeIcon(heading) {
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
-        <g transform="rotate(${(heading || 0) + 45}, 12, 12)">
+        <g transform="rotate(${heading || 0}, 12, 12)">
           <path fill="#388bfd" stroke="#fff" stroke-width="1"
             d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
         </g>

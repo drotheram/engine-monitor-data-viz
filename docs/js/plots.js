@@ -321,14 +321,17 @@ const PlotController = (() => {
     const startTs = epochStart || adsbData.start_ts || 0;
     const ts = track.map(p => p.ts - startTs);
 
-    // Altitude unit detection: the FlightAware API returns altitude in thousands
-    // of feet. Early versions of fetch_adsb.py stored this raw value directly
-    // (so alt_m=4.6 really means 4,600 ft). Newer versions will store proper
-    // metres (alt_m≈1402 for 4,600 ft). Detect by whether max(alt_m) < 100.
+    // Altitude unit detection.
+    // FlightAware returns altitude in hundreds of feet (FL notation, e.g. 15
+    // for FL015 = 1,500 ft). The early fetch_adsb.py incorrectly stored this
+    // as alt_m = FL_value × 0.3048 (treating FL hundreds as feet, not feet),
+    // so alt_m=4.6 actually represents 1,509 ft, not 4,600 ft or 4.6 m.
+    // Correctly stored files will have alt_m in real metres (≥ ~150 for any
+    // sensible cruise altitude).  Detect by max(alt_m) < 50.
     const maxAltM = Math.max(...track.map(p => p.alt_m || 0));
-    const altFt = maxAltM < 100
-      ? track.map(p => Math.round((p.alt_m || 0) * 1000))      // legacy kft → ft
-      : track.map(p => Math.round((p.alt_m || 0) * 3.28084));  // metres → ft
+    const altFt = maxAltM < 50
+      ? track.map(p => Math.round((p.alt_m || 0) * 100 * 3.28084))  // legacy FL×0.3048 → ft
+      : track.map(p => Math.round((p.alt_m || 0) * 3.28084));        // correct metres → ft
 
     const traces = [{
       name: "Altitude",

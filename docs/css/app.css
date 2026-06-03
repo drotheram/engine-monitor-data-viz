@@ -412,13 +412,16 @@ body {
 }
 
 /* --------------------------------------------------------
-   Map + Altitude Row
+   Map + Altitude Row  (sticky so it stays visible while scrolling charts)
    -------------------------------------------------------- */
 .map-row {
   display: flex;
   height: 260px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-panel);
+  position: sticky;
+  top: 0;
+  z-index: 20;   /* above chart panels (no explicit z-index) but below navbar */
 }
 
 .map-pane {
