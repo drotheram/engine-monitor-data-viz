@@ -155,6 +155,8 @@
     if (flightId === currentFlightId) return;
     currentFlightId = flightId;
 
+    if (window.innerWidth <= 768) closeMobileSidebar();
+
     // Update sidebar active state
     document.querySelectorAll(".flight-item").forEach(el => {
       el.classList.toggle("active", el.dataset.id === flightId);
@@ -305,6 +307,28 @@
   }
 
   // -----------------------------------------------------------------------
+  // Mobile sidebar drawer
+  // -----------------------------------------------------------------------
+  function closeMobileSidebar() {
+    document.body.classList.remove("sidebar-open");
+    const btn = document.getElementById("nav-hamburger");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+
+  function setupMobileSidebar() {
+    const btn      = document.getElementById("nav-hamburger");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    if (!btn || !backdrop) return;
+
+    btn.addEventListener("click", () => {
+      const isOpen = document.body.classList.toggle("sidebar-open");
+      btn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    backdrop.addEventListener("click", closeMobileSidebar);
+  }
+
+  // -----------------------------------------------------------------------
   // Panel collapse
   // -----------------------------------------------------------------------
   window.togglePanel = function(panelId) {
@@ -376,6 +400,7 @@
     document.title = `${AIRCRAFT_META[currentAircraft].label} — Engine Monitor`;
     buildSwitcher();
     setupSearch();
+    setupMobileSidebar();
 
     // Load manifest
     const manifest = await loadManifest(currentAircraft);

@@ -344,9 +344,13 @@ const PlotController = (() => {
       connectgaps: true,
     }];
 
+    const containerEl = document.getElementById(divId);
+    const paneEl = containerEl && containerEl.closest(".altitude-pane");
+    const h = (paneEl && paneEl.offsetHeight > 0) ? paneEl.offsetHeight : 260;
+
     const layout = {
       ...BASE_LAYOUT,
-      height: 260,
+      height: h,
       margin: { l: 52, r: 10, t: 6, b: 36 },
       legend: { ...BASE_LAYOUT.legend, visible: false },
       yaxis: {

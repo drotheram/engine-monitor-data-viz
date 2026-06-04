@@ -129,6 +129,36 @@ body {
   gap: 10px;
 }
 
+/* Hamburger — hidden on desktop, shown on mobile */
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.nav-hamburger:hover { background: var(--bg-hover); }
+
+/* Sidebar backdrop — hidden on desktop */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 45;
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
+}
+
 .status-badge {
   font-size: .75rem;
   padding: 2px 8px;
@@ -495,21 +525,58 @@ body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Altitude chart fills its pane on both desktop and mobile */
+#altitude-chart { height: 100%; }
+
 /* --------------------------------------------------------
-   Responsive
+   Responsive — mobile only (≤ 768 px)
    -------------------------------------------------------- */
 @media (max-width: 768px) {
-  :root { --sidebar-width: 100%; }
-  .layout { flex-direction: column; }
+
+  /* --- Hamburger visible, brand text hidden --- */
+  .nav-hamburger     { display: flex; }
+  .navbar-brand-text { display: none; }
+  .status-badge      { display: none; }
+
+  /* --- Sidebar: off-canvas drawer --- */
   .sidebar {
-    width: 100%;
-    height: 200px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
+    position: fixed;
+    top: var(--navbar-height);
+    left: -100%;
+    height: calc(100vh - var(--navbar-height));
+    width: min(320px, 85vw);
+    z-index: 50;
+    border-right: 1px solid var(--border);
+    border-bottom: none;
+    transition: left .25s ease;
   }
-  .map-row { flex-direction: column; height: auto; }
-  .altitude-pane { height: 180px; border-left: none; border-top: 1px solid var(--border); }
+
+  body.sidebar-open .sidebar {
+    left: 0;
+  }
+
+  /* --- Backdrop --- */
+  .sidebar-backdrop {
+    display: block;
+  }
+
+  body.sidebar-open .sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* --- Touch targets --- */
+  .flight-item        { padding: 14px 16px; }
+  .chart-panel-header { min-height: 44px; }
+  .aircraft-btn       { padding: 6px 12px; }
+
+  /* --- Map row: stacked, smaller --- */
+  .map-row        { flex-direction: column; height: auto; }
+  .map-pane       { height: 200px; flex: none; }
+  .altitude-pane  { height: 160px; flex: none; border-left: none; border-top: 1px solid var(--border); }
+
+  /* --- Hide legend pills (unclutter chart headers) --- */
+  .legend-pills { display: none; }
 }
 
 /* --------------------------------------------------------

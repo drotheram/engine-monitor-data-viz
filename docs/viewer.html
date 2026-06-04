@@ -27,8 +27,16 @@
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
     </svg>
-    Engine Monitor
+    <span class="navbar-brand-text">Engine Monitor</span>
   </a>
+
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle flight list" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+      <rect y="2"  width="18" height="2" rx="1"/>
+      <rect y="8"  width="18" height="2" rx="1"/>
+      <rect y="14" width="18" height="2" rx="1"/>
+    </svg>
+  </button>
 
   <div class="aircraft-switcher" id="aircraft-switcher">
     <!-- Populated by JS -->
@@ -38,6 +46,9 @@
     <span class="status-badge" id="status-badge">Loading…</span>
   </div>
 </nav>
+
+<!-- Backdrop for mobile sidebar drawer -->
+<div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
 
 <!-- ======================================================
      Main Layout
@@ -90,7 +101,7 @@
           <div id="map-leaflet"></div>
         </div>
         <div class="altitude-pane">
-          <div id="altitude-chart" class="chart-div" style="height:260px"></div>
+          <div id="altitude-chart" class="chart-div"></div>
         </div>
       </div>
 
