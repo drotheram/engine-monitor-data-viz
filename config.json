@@ -14,7 +14,7 @@
     }
   },
   "processing": {
-    "min_rpm_threshold": 2000,
+    "min_rpm_threshold": 1300,
     "min_duration_minutes": 20,
     "tail_rpm_cutoff": 200,
     "tail_idle_seconds": 300,
