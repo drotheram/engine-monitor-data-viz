@@ -1,8 +1,24 @@
 {
   "aircraft": "CFHTI",
-  "generated_utc": "2026-06-14T04:30:07.551247Z",
-  "flight_count": 14,
+  "generated_utc": "2026-06-14T04:51:29.847302Z",
+  "flight_count": 16,
   "flights": [
+    {
+      "id": "Flt1352_20260613",
+      "file": "Flt1352_20260613.json",
+      "flight_number": 1352,
+      "date": "2026-06-13",
+      "local_time_start": "10:29:33",
+      "zulu_time_start": "17:29:33",
+      "duration_minutes": 16.9,
+      "max_rpm": 2067,
+      "engine_hours": 2301.05,
+      "data_points": 204,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1352_20260613F.csv"
+      ]
+    },
     {
       "id": "Flt1345_20260612",
       "file": "Flt1345_20260612.json",
@@ -49,6 +65,22 @@
       "has_adsb": false,
       "source_files": [
         "Flt1339_20260602F.csv"
+      ]
+    },
+    {
+      "id": "Flt1336_20260529",
+      "file": "Flt1336_20260529.json",
+      "flight_number": 1336,
+      "date": "2026-05-29",
+      "local_time_start": "10:24:52",
+      "zulu_time_start": "17:24:52",
+      "duration_minutes": 15.9,
+      "max_rpm": 1809,
+      "engine_hours": 2294.56,
+      "data_points": 192,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1336_20260529E.csv"
       ]
     },
     {
