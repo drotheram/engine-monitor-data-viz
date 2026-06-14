@@ -1,6 +1,231 @@
 {
   "aircraft": "CFHTI",
-  "generated_utc": "2026-05-26T05:06:40.096977Z",
-  "flight_count": 0,
-  "flights": []
+  "generated_utc": "2026-06-14T04:10:02.450345Z",
+  "flight_count": 14,
+  "flights": [
+    {
+      "id": "Flt1345_20260612",
+      "file": "Flt1345_20260612.json",
+      "flight_number": 1345,
+      "date": "2026-06-12",
+      "local_time_start": "08:04:33",
+      "zulu_time_start": "15:04:33",
+      "duration_minutes": 61.2,
+      "max_rpm": 2510,
+      "engine_hours": 2297.77,
+      "data_points": 735,
+      "has_adsb": true,
+      "source_files": [
+        "Flt1345_20260612F.csv"
+      ]
+    },
+    {
+      "id": "Flt1343_20260602",
+      "file": "Flt1343_20260602.json",
+      "flight_number": 1343,
+      "date": "2026-06-02",
+      "local_time_start": "17:17:01",
+      "zulu_time_start": "00:17:01",
+      "duration_minutes": 86.5,
+      "max_rpm": 2586,
+      "engine_hours": 2296.33,
+      "data_points": 1039,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1343_20260602F.csv"
+      ]
+    },
+    {
+      "id": "Flt1339_20260602",
+      "file": "Flt1339_20260602.json",
+      "flight_number": 1339,
+      "date": "2026-06-02",
+      "local_time_start": "10:11:47",
+      "zulu_time_start": "17:11:47",
+      "duration_minutes": 111.9,
+      "max_rpm": 2635,
+      "engine_hours": 2294.82,
+      "data_points": 1111,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1339_20260602F.csv"
+      ]
+    },
+    {
+      "id": "Flt1332_20260527",
+      "file": "Flt1332_20260527.json",
+      "flight_number": 1332,
+      "date": "2026-05-27",
+      "local_time_start": "09:26:11",
+      "zulu_time_start": "16:26:11",
+      "duration_minutes": 21.3,
+      "max_rpm": 2339,
+      "engine_hours": 2294.28,
+      "data_points": 211,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1332_20260527F.csv"
+      ]
+    },
+    {
+      "id": "Flt1331_20260523",
+      "file": "Flt1331_20260523.json",
+      "flight_number": 1331,
+      "date": "2026-05-23",
+      "local_time_start": "15:14:23",
+      "zulu_time_start": "22:14:23",
+      "duration_minutes": 262.7,
+      "max_rpm": 2564,
+      "engine_hours": 2292.66,
+      "data_points": 1171,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1331_20260523F.csv"
+      ]
+    },
+    {
+      "id": "Flt1327_20260522",
+      "file": "Flt1327_20260522.json",
+      "flight_number": 1327,
+      "date": "2026-05-22",
+      "local_time_start": "08:26:56",
+      "zulu_time_start": "15:26:56",
+      "duration_minutes": 633.0,
+      "max_rpm": 2635,
+      "engine_hours": 2290.92,
+      "data_points": 1259,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1327_20260522F.csv"
+      ]
+    },
+    {
+      "id": "Flt1324_20260518",
+      "file": "Flt1324_20260518.json",
+      "flight_number": 1324,
+      "date": "2026-05-18",
+      "local_time_start": "11:58:27",
+      "zulu_time_start": "18:58:27",
+      "duration_minutes": 47.0,
+      "max_rpm": 2562,
+      "engine_hours": 2290.17,
+      "data_points": 565,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1324_20260518F.csv"
+      ]
+    },
+    {
+      "id": "Flt1321_20260517",
+      "file": "Flt1321_20260517.json",
+      "flight_number": 1321,
+      "date": "2026-05-17",
+      "local_time_start": "18:29:19",
+      "zulu_time_start": "01:29:19",
+      "duration_minutes": 71.2,
+      "max_rpm": 2512,
+      "engine_hours": 2288.99,
+      "data_points": 856,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1321_20260517F.csv"
+      ]
+    },
+    {
+      "id": "Flt1320_20260517",
+      "file": "Flt1320_20260517.json",
+      "flight_number": 1320,
+      "date": "2026-05-17",
+      "local_time_start": "14:57:36",
+      "zulu_time_start": "21:57:36",
+      "duration_minutes": 75.1,
+      "max_rpm": 2536,
+      "engine_hours": 2287.75,
+      "data_points": 902,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1320_20260517F.csv"
+      ]
+    },
+    {
+      "id": "Flt1317_20260508",
+      "file": "Flt1317_20260508.json",
+      "flight_number": 1317,
+      "date": "2026-05-08",
+      "local_time_start": "09:26:56",
+      "zulu_time_start": "16:26:56",
+      "duration_minutes": 101.9,
+      "max_rpm": 2640,
+      "engine_hours": 2286.07,
+      "data_points": 1224,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1317_20260508F.csv"
+      ]
+    },
+    {
+      "id": "Flt1314_20260427",
+      "file": "Flt1314_20260427.json",
+      "flight_number": 1314,
+      "date": "2026-04-27",
+      "local_time_start": "11:03:28",
+      "zulu_time_start": "18:03:28",
+      "duration_minutes": 41.1,
+      "max_rpm": 2656,
+      "engine_hours": 2285.4,
+      "data_points": 494,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1314_20260427F.csv"
+      ]
+    },
+    {
+      "id": "Flt1313_20260427",
+      "file": "Flt1313_20260427.json",
+      "flight_number": 1313,
+      "date": "2026-04-27",
+      "local_time_start": "08:55:19",
+      "zulu_time_start": "15:55:19",
+      "duration_minutes": 65.4,
+      "max_rpm": 2590,
+      "engine_hours": 2284.31,
+      "data_points": 786,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1313_20260427F.csv"
+      ]
+    },
+    {
+      "id": "Flt1311_20260425",
+      "file": "Flt1311_20260425.json",
+      "flight_number": 1311,
+      "date": "2026-04-25",
+      "local_time_start": "09:29:09",
+      "zulu_time_start": "16:29:09",
+      "duration_minutes": 105.2,
+      "max_rpm": 2606,
+      "engine_hours": 2282.57,
+      "data_points": 1263,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1311_20260425F.csv"
+      ]
+    },
+    {
+      "id": "Flt1304_20260421",
+      "file": "Flt1304_20260421.json",
+      "flight_number": 1304,
+      "date": "2026-04-21",
+      "local_time_start": "09:22:10",
+      "zulu_time_start": "16:22:10",
+      "duration_minutes": 127.9,
+      "max_rpm": 2513,
+      "engine_hours": 2279.3,
+      "data_points": 1536,
+      "has_adsb": false,
+      "source_files": [
+        "Flt1304_20260421F.csv"
+      ]
+    }
+  ]
 }
