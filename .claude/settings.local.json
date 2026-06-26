@@ -51,7 +51,8 @@
       "Bash(git stash *)",
       "Bash(grep -v \"^$\")",
       "Bash(git commit -m 'fix: remove Leaflet SRI integrity hash causing script load failure *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(gh repo *)"
     ]
   }
 }
